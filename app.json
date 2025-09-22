@@ -22,7 +22,7 @@
       "predictiveBackGestureEnabled": false
     },
     "web": {
-      "output": "static",
+      "output": "server",
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
@@ -52,7 +52,7 @@
       "reactCompiler": true
     },
     "extra": {
-      "apiBaseUrl": "http://100.93.243.14:2353"
+      "apiBaseUrl": "https://apiv2.fairplay.video"
     }
   }
 }
