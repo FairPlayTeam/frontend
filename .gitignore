@@ -42,3 +42,4 @@ app-example
 /ios
 /android
 fpdist.zip
+package-lock.json
