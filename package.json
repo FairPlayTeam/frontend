@@ -9,6 +9,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "build:web": "expo export -p web",
+    "build:android": "eas build -p android --profile preview",
     "lint": "expo lint"
   },
   "dependencies": {
@@ -50,7 +51,8 @@
     "@types/react": "~19.1.0",
     "typescript": "~5.9.2",
     "eslint": "^9.25.0",
-    "eslint-config-expo": "~10.0.0"
+    "eslint-config-expo": "~10.0.0",
+    "eas-cli": "^16.19.3"
   },
   "private": true
 }

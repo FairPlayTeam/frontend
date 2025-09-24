@@ -19,7 +19,10 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
     },
     "web": {
       "output": "server",
@@ -52,7 +55,11 @@
       "reactCompiler": true
     },
     "extra": {
-      "apiBaseUrl": "https://apiv2.fairplay.video"
+      "apiBaseUrl": "https://apiv2.fairplay.video",
+      "router": {},
+      "eas": {
+        "projectId": "7ad37b16-003f-41ac-8ed2-7c0969d4319e"
+      }
     }
   }
 }
