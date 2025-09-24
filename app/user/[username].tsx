@@ -54,8 +54,6 @@ export default function UserProfileScreen() {
     );
   }
 
-  
-
   return (
     <ThemedView style={styles.container}>
       {loading ? (
@@ -117,12 +115,11 @@ const styles = StyleSheet.create({
   container: { flex: 1 },
   bannerWrap: { width: '100%', height: 140, backgroundColor: '#e5e5e5' },
   banner: { width: '100%', height: '100%' },
-  avatarWrap: { position: 'absolute', left: 16, bottom: -28, width: 72, height: 72, borderRadius: 36, overflow: 'hidden', borderWidth: 3, borderColor: 'white' },
-  avatar: { width: '100%', height: '100%', borderRadius: 36 },
+  avatarWrap: { position: 'absolute', left: 16, bottom: -28, width: 72, height: 72, borderRadius: 36, overflow: 'hidden', borderWidth: 3, borderColor: 'white', alignItems: 'center', justifyContent: 'center'},
+  avatar: { width: '100%', height: '100%', borderRadius: 36, resizeMode: 'cover' },
   headerRow: { paddingTop: 36, paddingHorizontal: 12, paddingBottom: 8, flexDirection: 'row', alignItems: 'flex-end' },
   counts: { flexDirection: 'row', gap: 12 },
   gridContent: { paddingHorizontal: 12, paddingBottom: 24, gap: 12, maxWidth: 1280, alignSelf: 'center', width: '100%' },
   gridContentEdge: { paddingHorizontal: 0, paddingBottom: 24, gap: 12, width: '100%' },
   gridRow: { gap: 16 },
-  
 });
