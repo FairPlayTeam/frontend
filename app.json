@@ -23,6 +23,7 @@
       "permissions": [
         "android.permission.RECORD_AUDIO"
       ],
+      "package": "com.fairplay.fpfrontend"
     },
     "web": {
       "output": "server",

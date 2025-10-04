@@ -2,9 +2,12 @@ import { Tabs } from 'expo-router';
 import { Icon } from '@/components/ui/icon';
 import { useAuth } from '@/context/auth';
 
+
 export default function TabsLayout() {
   const { user } = useAuth();
   return (
+    <>
+    
     <Tabs
       screenOptions={{
         headerShown: false,
@@ -72,5 +75,6 @@ export default function TabsLayout() {
         <Tabs.Screen name="admin" options={{ href: null }} />
       )}
     </Tabs>
+    </>
   );
 }
