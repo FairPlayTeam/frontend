@@ -72,7 +72,7 @@ function Header() {
                 <TouchableOpacity onPress={() => router.push("/login")}>
                   <Text style={[styles.loginButton, { color: isDark ? "#fff" : colors.darkGray }]}>Se Connecter</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => router.push("/login?register=true")}>
+                <TouchableOpacity onPress={() => router.push("/register")}>
                   <Text style={[styles.loginButton, { color: isDark ? "#fff" : colors.darkGray }]}>S'Inscrire</Text>
                 </TouchableOpacity>
               </>
