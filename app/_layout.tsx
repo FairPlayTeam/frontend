@@ -62,30 +62,30 @@ function Header() {
             if (width>650) setshowOtherSearchBar(false);
            }}>
           <View style={styles.container}>
-            {!showLeftBar ? <TouchableOpacity style={[ styles.searchButton, { backgroundColor: isDark ? '#777' : colors.lightGray }, {borderRadius: 10, margin:10}]} onPress={()=>{
+            {!showLeftBar && <TouchableOpacity style={[ styles.searchButton, { backgroundColor: isDark ? '#777' : colors.lightGray }, {borderRadius: 10, margin:10}]} onPress={()=>{
                 
               }}>
                 <FontAwesome name="bars" size={18} color={isDark ? "#fff" : "black"} />
-              </TouchableOpacity>: <></>}
+              </TouchableOpacity>}
                 <Link href={'/'} asChild>
               <View style={{ flexDirection: "row" }}>
                       <Image
                   source={require("../assets/images/favicon.png")}
                   style={{ width: 40, height: 40, borderRadius: 5 }}
                   />
-                {showName ? (<Text style={{
+                {showName && (<Text style={{
                   fontSize: 22,
                   fontWeight: "700",
                   color: isDark ? "#fff" : "#333333",
                   paddingLeft: 12,
-                }}>FairPlay</Text>):(<></>)}
+                }}>FairPlay</Text>)}
               </View>
             </Link>
             <View style={[styles.searchBar, { backgroundColor: isDark ? '#555' : colors.white }]}>
-              {showSearchBar ? <TextInput
+              {showSearchBar && <TextInput
                 placeholder="Rechercher des vidéos"
                 style={[styles.searchInput, { color: isDark ? "#fff" : colors.darkGray },{ paddingHorizontal: paddingX }]}
-              /> : <></>}
+              />}
               <TouchableOpacity style={[styles.searchButton, { backgroundColor: isDark ? '#777' : colors.lightGray }]} onPress={()=>{
                 if (!showSearchBar) setshowOtherSearchBar(!showOtherSearchBar)
               }}>
@@ -106,14 +106,14 @@ function Header() {
               </>
             ) : (
               <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
-                {showWelcome ? (<Text
+                {showWelcome && (<Text
                   style={{
                     fontWeight: '600',
                     color: isDark ? "#fff" : Colors[colorScheme ?? 'light'].text,
                   }}
                 >
                   Welcome back, {user.displayName || user.username}
-                </Text>):(<></>)}
+                </Text>)}
                 <Link
                   href="/dashboard"
                   style={{
@@ -155,7 +155,7 @@ function Header() {
             </TouchableOpacity>
           </View>
         </View>
-        {showOtherSearchBar ? 
+        {showOtherSearchBar && 
         <View style={{ backgroundColor: isDark ? '#333' : colors.white, borderBottomWidth: 1,borderColor: colors.lightGray, padding: 2}}>
         <View style={[styles.searchBar, { backgroundColor: isDark ? '#555' : colors.white }]}>
               <TextInput
@@ -167,7 +167,7 @@ function Header() {
               </TouchableOpacity>
             </View>
             </View>
-            : <></>}
+            }
       </ThemeProvider>
     </>
   );
@@ -251,8 +251,9 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: colors.white,
     alignItems: "center",
-    alignSelf: "stretch",
+    alignSelf: "center",
     overflow: "hidden",
+    height: 40,
   },
   searchInput: {
     flex: 1,
@@ -271,7 +272,8 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 14,
     justifyContent: "center",
     alignItems: "center",
-
+    //height:"100%",
+    alignSelf: "stretch",
   },
   headerActions: {
     flexDirection: "row",
