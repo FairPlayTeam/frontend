@@ -41,6 +41,10 @@ export default function TabsLayout() {
             minWidth:250,
             display: showLeftBar ?"flex" : "none",
           },
+          drawerItemStyle: {
+            display: "none"
+
+          },
           
           drawerActiveTintColor: "#1d60ca",
           drawerInactiveTintColor: isDark ? "#dbdee4" : "#292828",
@@ -54,6 +58,7 @@ export default function TabsLayout() {
             drawerIcon: ({ color, size }) => (
               <Icon name="ion:home" color={color} size={size} />
             ),
+            drawerItemStyle: { display: "flex" }
           }}
         />
 
@@ -66,6 +71,7 @@ export default function TabsLayout() {
               drawerIcon: ({ color, size }) => (
                 <Icon name="ion:cloud-upload" color={color} size={size} />
               ),
+              drawerItemStyle: { display: "flex" }
             }}
           />
         ) : (
@@ -81,6 +87,7 @@ export default function TabsLayout() {
               drawerIcon: ({ color, size }) => (
                 <Icon name="ion:film" color={color} size={size} />
               ),
+              drawerItemStyle: { display: "flex" }
             }}
           />
         ) : (
@@ -95,6 +102,7 @@ export default function TabsLayout() {
             drawerIcon: ({ color, size }) => (
               <Icon name="ion:grid" color={color} size={size} />
             ),
+            drawerItemStyle: { display: "flex" }
           }}
         />
 
@@ -111,6 +119,7 @@ export default function TabsLayout() {
                   size={size}
                 />
               ),
+              drawerItemStyle: { display: "flex" }
             }}
           />
         ) : (
@@ -129,6 +138,7 @@ export default function TabsLayout() {
               drawerIcon: ({ color, size }) => (
                 <Icon name="ion:settings" color={color} size={size} />
               ),
+              drawerItemStyle: { display: "flex" }
             }}
           />
         ) : (

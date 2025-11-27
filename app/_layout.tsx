@@ -30,7 +30,7 @@ function Header() {
   const [showSearchBar, setshowSearchBar] = useState(true)
   const [showOtherSearchBar, setshowOtherSearchBar] = useState(false)
   const [showLeftBar, setshowLeftBar]= useState(true)
-
+  
   useEffect(() => {
     if (!user) {
       profile
@@ -63,9 +63,7 @@ function Header() {
             if (width<550) setshowName(false)
            }}>
           <View style={styles.container}>
-            {!showLeftBar && <TouchableOpacity style={[ styles.searchButton, { backgroundColor: isDark ? '#777' : colors.lightGray }, {borderRadius: 10, margin:10}]} onPress={()=>{
-                
-              }}>
+            {!showLeftBar && <TouchableOpacity style={[ styles.searchButton, { backgroundColor: isDark ? '#777' : colors.lightGray }, {borderRadius: 10, margin:10}]}>
                 <FontAwesome name="bars" size={18} color={isDark ? "#fff" : "black"} />
               </TouchableOpacity>}
                 <Link href={'/'} asChild>
@@ -85,7 +83,7 @@ function Header() {
             </View>
             <View style={[styles.searchBar, { backgroundColor: isDark ? '#555' : colors.white }, {maxWidth : showSearchBar ? 650 : 45},{minWidth : showSearchBar ? 320 : 45},]}>
               {showSearchBar && <TextInput
-                placeholder="Rechercher des vidéos"
+                placeholder="Search Videos"
                 style={[styles.searchInput, { color: isDark ? "#fff" : colors.darkGray },{ paddingHorizontal: paddingX }]}
               />}
               <TouchableOpacity style={[styles.searchButton, { backgroundColor: isDark ? '#777' : colors.lightGray }]} onPress={()=>{
@@ -295,10 +293,17 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: "center",
     textAlignVertical: "center",
-    marginRight: 8,
+    marginRight: 10,
     justifyContent: "center",
     alignItems: "center",
-    marginHorizontal: 5,
+    //marginHorizontal: 5,
+
+  },
+  loginText:{
+    fontWeight: "700",
+    fontSize: 14,
+    textAlign: "center",
+    textAlignVertical: "center",
   },
   loginText:{
     fontWeight: "700",
