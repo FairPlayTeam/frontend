@@ -57,9 +57,10 @@ function Header() {
               else setshowWelcome(true)
             if (width<800) {setshowName(false); setshowLeftBar(false)}
               else {setshowName(true); setshowLeftBar(true)}
-            if (width<650) setshowSearchBar(false);
+            if (width<750) {setshowSearchBar(false); setshowName(true)}
               else setshowSearchBar(true)
-            if (width>650) setshowOtherSearchBar(false);
+            if (width>750) setshowOtherSearchBar(false);
+            if (width<550) setshowName(false)
            }}>
           <View style={styles.container}>
             {!showLeftBar && <TouchableOpacity style={[ styles.searchButton, { backgroundColor: isDark ? '#777' : colors.lightGray }, {borderRadius: 10, margin:10}]} onPress={()=>{
@@ -81,7 +82,8 @@ function Header() {
                 }}>FairPlay</Text>)}
               </View>
             </Link>
-            <View style={[styles.searchBar, { backgroundColor: isDark ? '#555' : colors.white }]}>
+            </View>
+            <View style={[styles.searchBar, { backgroundColor: isDark ? '#555' : colors.white }, {maxWidth : showSearchBar ? 650 : 45},{minWidth : showSearchBar ? 320 : 45},]}>
               {showSearchBar && <TextInput
                 placeholder="Rechercher des vidéos"
                 style={[styles.searchInput, { color: isDark ? "#fff" : colors.darkGray },{ paddingHorizontal: paddingX }]}
@@ -92,16 +94,16 @@ function Header() {
                 <FontAwesome name="search" size={18} color={isDark ? "#fff" : "black"} />
               </TouchableOpacity>
             </View>
-          </View>
+          
         
           <View style={styles.headerActions}>
             {!user ? (
               <>
-                <TouchableOpacity onPress={() => router.push("/login")}>
-                  <Text style={[styles.loginButton, { color: isDark ? "#fff" : colors.darkGray }]}>Se Connecter</Text>
+                <TouchableOpacity onPress={() => router.push("/login")} style={styles.loginButton}>
+                  <Text style={[ { color: isDark ? "#fff" : colors.darkGray , backgroundColor: isDark ? colors.darkGray: colors.white }]}>Log In</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => router.push("/register")}>
-                  <Text style={[styles.loginButton, { color: isDark ? "#fff" : colors.darkGray }]}>S'Inscrire</Text>
+                <TouchableOpacity onPress={() => router.push("/register")} style={styles.loginButton}>
+                  <Text style={[{ color: isDark ? "#fff" : colors.darkGray , backgroundColor: isDark ? colors.darkGray: colors.white }]}>Sign In</Text>
                 </TouchableOpacity>
               </>
             ) : (
@@ -244,16 +246,17 @@ export const styles = StyleSheet.create({
     flexGrow: 1,
     flexShrink: 1,
     //flexBasis: 520,
-    maxWidth: 720,
+    maxWidth: 550,
     marginHorizontal: 16,
     borderWidth: 1,
     borderColor: colors.lightGray,
     borderRadius: 10,
     backgroundColor: colors.white,
     alignItems: "center",
-    alignSelf: "center",
+    //alignSelf:"center",
     overflow: "hidden",
-    height: 40,
+    height: 45,
+    //minWidth : 320
   },
   searchInput: {
     flex: 1,
@@ -261,9 +264,10 @@ export const styles = StyleSheet.create({
     paddingHorizontal: screenWidth-1200,
     fontSize: 15,
     color: colors.darkGray,
-    textAlign: "left",
+    textAlign: "center",
   
     alignSelf: "stretch",
+    justifyContent:"center"
    
   },
   searchButton: {
@@ -281,14 +285,12 @@ export const styles = StyleSheet.create({
 
   },
   loginButton: {
-    height: 36,
-    paddingHorizontal: 14,
+    height: 33,
+    paddingHorizontal: 12,
     paddingVertical: 8,
     borderRadius: 8,
     borderWidth: 1,
     borderColor: colors.lightGray,
-    backgroundColor: colors.white,
-    color: colors.darkGray,
     fontWeight: "600",
     fontSize: 14,
     textAlign: "center",
@@ -298,6 +300,12 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     marginHorizontal: 5,
   },
+  loginText:{
+    fontWeight: "700",
+    fontSize: 14,
+    textAlign: "center",
+    textAlignVertical: "center",
+  },
   donateButton: {
     backgroundColor: colors.donatePink,
     height: 33,
@@ -305,6 +313,8 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
+    
+    
     
   },
   donateText: {
