@@ -6,7 +6,7 @@ import { ListState } from '@/components/list-state';
 import { composeMeta, formatViews, formatRating, formatDate } from '@/utils/format';
 import { useRouter } from 'expo-router';
 import { useEffect, useState, useCallback } from 'react';
-import { StyleSheet, useWindowDimensions, View } from 'react-native';
+import { StyleSheet, useWindowDimensions } from 'react-native';
 
 export default function HomeTab() {
   const router = useRouter();
@@ -14,8 +14,8 @@ export default function HomeTab() {
   const [items, setItems] = useState<VideoListItem[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
-  //const { width } = useWindowDimensions();
-  const [width, setwidth] = useState(0)
+  const { width } = useWindowDimensions();
+  
 
   const load = useCallback(() => {
     let active = true;
@@ -60,9 +60,7 @@ export default function HomeTab() {
   }
 
   return (
-    <ThemedView style={styles.container} onLayout={(event) => {
-            setwidth(event.nativeEvent.layout.width)
-           }}>
+    <ThemedView style={styles.container}>
       <ListState loading={loading} error={error}>
         <VideoGrid
           data={items}
