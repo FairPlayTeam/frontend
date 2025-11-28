@@ -300,12 +300,11 @@ export const styles = StyleSheet.create({
   },
   donateButton: {
     backgroundColor: colors.donatePink,
-    height: 33,
-    paddingHorizontal: 12,
+    height: 36,
+    paddingHorizontal: 16,
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
-    
   },
   donateText: {
     color: colors.white,
