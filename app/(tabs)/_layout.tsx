@@ -1,4 +1,3 @@
-import { Tabs } from 'expo-router';
 import { Icon } from '@/components/ui/icon';
 import { useAuth } from '@/context/auth';
 import { useColorScheme } from '@/hooks/use-color-scheme';

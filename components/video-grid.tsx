@@ -16,9 +16,11 @@ export function VideoGrid<T>(props: {
   extraContentHeader?: ReactElement | null;
   width: number;
 }) {
+  
   const padding = props.contentPadding ?? defaultPadding;
   const gap = props.gap ?? defaultGap;
   const { cols, itemWidth } = computeItemWidth(props.width, padding, gap);
+  
   const basePad = Platform.OS === 'web' && props.contentEdgeOnWeb ? { paddingHorizontal: 0 } : { paddingHorizontal: padding };
   const contentStyle: StyleProp<ViewStyle> = [basePad, { paddingBottom: 24, gap, width: '100%' }];
   return (

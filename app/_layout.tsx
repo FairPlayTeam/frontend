@@ -1,26 +1,29 @@
+import { colors } from "@/components/ui/colors";
 import { Colors } from '@/constants/theme';
 import { AuthProvider, useAuth } from '@/context/auth';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { auth, profile } from '@/services/auth';
+import { FontAwesome } from "@expo/vector-icons";
 import {
   DarkTheme,
   DefaultTheme,
   ThemeProvider,
 } from '@react-navigation/native';
-import { Link, Stack } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
+import { Drawer } from 'expo-router/drawer';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { Dimensions, Image, Linking, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import 'react-native-reanimated';
 import { changeShowLeftBar } from "./(tabs)/_layout";
 
-function AuthHeaderRight() {
+function Header() {
   const { user, setUser } = useAuth();
   const colorScheme = useColorScheme();
   const tint = Colors[colorScheme ?? 'light'].tint;
   const isDark = (colorScheme ?? 'light') === 'dark';
   const router = useRouter();
-  const [paddingX, setPaddingX] = useState(0);
+  const [searchBarWidth, setsearchBarWidth] = useState(0);
   const [showWelcome, setshowWelcome] = useState(true)
   const [showName, setshowName] = useState(true)
   const [showSearchBar, setshowSearchBar] = useState(true)
@@ -35,18 +38,20 @@ function AuthHeaderRight() {
         .catch(() => {});
     }
   }, [user, setUser]);
+
   async function onLogout() {
     await auth.logout();
     setUser(null);
   }
+
   return (
     <>
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <View style={[styles.header, { backgroundColor: isDark ? '#333' : colors.white}]}  onLayout={(event) => {
             const width = event.nativeEvent.layout.width;
-            if (width>1200) setPaddingX(150);
-            if (width<1200) setPaddingX(100);
-            if (width<1100) setPaddingX(50);
+            if (width>1200) setsearchBarWidth(150);
+            if (width<1200) setsearchBarWidth(100);
+            if (width<1100) setsearchBarWidth(50);
             if (width<1000) setshowWelcome(false);
               else setshowWelcome(true)
             if (width<800) {setshowName(false); setshowLeftBar(false)}
@@ -78,7 +83,7 @@ function AuthHeaderRight() {
             <View style={[styles.searchBar, { backgroundColor: isDark ? '#555' : colors.white }, {maxWidth : showSearchBar ? 650 : 45},{minWidth : showSearchBar ? 320 : 45},]}>
               {showSearchBar && <TextInput
                 placeholder="Search Videos"
-                style={[styles.searchInput, { color: isDark ? "#fff" : colors.darkGray },{ paddingHorizontal: paddingX }]}
+                style={[styles.searchInput, { color: isDark ? "#fff" : colors.darkGray },{ width: searchBarWidth }]}
               />}
               <TouchableOpacity style={[styles.searchButton, { backgroundColor: isDark ? '#777' : colors.lightGray }]} onPress={()=>{
                 if (!showSearchBar) setshowOtherSearchBar(!showOtherSearchBar)
@@ -153,8 +158,8 @@ function AuthHeaderRight() {
         <View style={{ backgroundColor: isDark ? '#333' : colors.white, borderBottomWidth: 1,borderColor: colors.lightGray, padding: 2}}>
         <View style={[styles.searchBar, { backgroundColor: isDark ? '#555' : colors.white }]}>
               <TextInput
-                placeholder="Rechercher des vidéos"
-                style={[styles.searchInput, { color: isDark ? "#fff" : colors.darkGray },{ paddingHorizontal: paddingX }]}
+                placeholder="Search Videos"
+                style={[styles.searchInput, { color: isDark ? "#fff" : colors.darkGray },{ paddingHorizontal: searchBarWidth }]}
               /> 
               <TouchableOpacity style={[styles.searchButton, { backgroundColor: isDark ? '#777' : colors.lightGray }]}>
                 <FontAwesome name="search" size={18} color={isDark ? "#fff" : "black"} />
@@ -171,35 +176,37 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AuthProvider>
-        <Stack
-          screenOptions={{
-            headerShown: true,
-            headerTitle: '',
-            headerStyle: { backgroundColor: '#000' },
-            headerTintColor: '#fff',
-          }}
-        >
-          <Stack.Screen
-            name="(tabs)"
-            options={{
-              headerRight: () => <AuthHeaderRight />,
-              headerBackVisible: false,
+    <>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <AuthProvider>
+          <Drawer
+            screenOptions={{
+              headerShown: true,
+              headerTitle: '',
+              headerStyle: { backgroundColor: '#fff' },
+              headerTintColor: '#fff',
+              header: () => <Header />,
+              
             }}
-          />
-          <Stack.Screen name="login" />
-          <Stack.Screen name="register" />
-          <Stack.Screen name="dashboard" options={{ title: 'Dashboard' }} />
-          <Stack.Screen name="video/[id]" options={{ headerShown: true }} />
-          <Stack.Screen
-            name="people"
-            options={{ presentation: 'modal', title: 'People' }}
-          />
-        </Stack>
-      </AuthProvider>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+          >
+            <Drawer.Screen
+              name="(tabs)"
+              options={{
+              }}
+            />
+            <Drawer.Screen name="login" />
+            <Drawer.Screen name="register" />
+            <Drawer.Screen name="dashboard" options={{ title: 'Dashboard' }} />
+            <Drawer.Screen name="video/[id]" options={{ headerShown: true }} />
+            <Drawer.Screen
+              name="people"
+              options={{ title: 'People' }}
+            />
+          </Drawer>
+        </AuthProvider>
+        <StatusBar style="auto" />
+      </ThemeProvider>
+    </>
   );
 }
 
@@ -242,7 +249,7 @@ export const styles = StyleSheet.create({
     borderColor: colors.lightGray,
     borderRadius: 10,
     backgroundColor: colors.white,
-    alignItems: "center",
+    alignItems: "flex-start",
     //alignSelf:"center",
     overflow: "hidden",
     height: 45,
@@ -251,11 +258,10 @@ export const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     paddingVertical: 10,
-    paddingHorizontal: screenWidth-1200,
+    paddingHorizontal: 10,
     fontSize: 15,
     color: colors.darkGray,
-    textAlign: "center",
-  
+    textAlign: "left",
     alignSelf: "stretch",
     justifyContent:"center"
    

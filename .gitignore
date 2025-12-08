@@ -43,3 +43,6 @@ app-example
 /android
 fpdist.zip
 package-lock.json
+
+#vscode
+.vscode
