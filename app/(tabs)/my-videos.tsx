@@ -1,4 +1,5 @@
 import { ThemedView } from '@/components/themed-view';
+import { ThemedText } from '@/components/themed-text';
 import { VideoCard } from '@/components/video-card-grid';
 import { VideoGrid } from '@/components/video-grid';
 import { StatusBadges } from '@/components/status-badges';
@@ -16,8 +17,8 @@ export default function MyVideosTab() {
   const [items, setItems] = useState<MyVideoItem[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
-  const { width } = useWindowDimensions();
   const textColor = useThemeColor({}, 'text');
+  const [width, setwidth] = useState(0)
 
   const load = useCallback(() => {
     let active = true;
@@ -66,7 +67,10 @@ export default function MyVideosTab() {
   }
 
   return (
-    <ThemedView style={styles.container}>
+    <ThemedView style={styles.container} onLayout={(event) => {
+            setwidth(event.nativeEvent.layout.width)
+           }}>
+      <ThemedText type="title" style={{marginLeft: 10, marginBottom: 10}}>My Vidéos</ThemedText>
       <ListState loading={loading} error={error}>
         <VideoGrid
           data={items}
