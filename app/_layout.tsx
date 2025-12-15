@@ -13,10 +13,9 @@ import { Link, useRouter } from 'expo-router';
 import { Drawer } from 'expo-router/drawer';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
-import { Image, Linking, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Dimensions, Image, Linking, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import 'react-native-reanimated';
-import { Dimensions } from "react-native";
-import { Background } from "@react-navigation/elements";
+import { changeShowLeftBar } from "./(tabs)/_layout";
 
 function Header() {
   const { user, setUser } = useAuth();
@@ -24,7 +23,7 @@ function Header() {
   const tint = Colors[colorScheme ?? 'light'].tint;
   const isDark = (colorScheme ?? 'light') === 'dark';
   const router = useRouter();
-  const [paddingX, setPaddingX] = useState(0);
+  const [searchBarWidth, setsearchBarWidth] = useState(0);
   const [showWelcome, setshowWelcome] = useState(true)
   const [showName, setshowName] = useState(true)
   const [showSearchBar, setshowSearchBar] = useState(true)
@@ -50,9 +49,9 @@ function Header() {
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <View style={[styles.header, { backgroundColor: isDark ? '#333' : colors.white}]}  onLayout={(event) => {
             const width = event.nativeEvent.layout.width;
-            if (width>1200) setPaddingX(150);
-            if (width<1200) setPaddingX(100);
-            if (width<1100) setPaddingX(50);
+            if (width>1200) setsearchBarWidth(150);
+            if (width<1200) setsearchBarWidth(100);
+            if (width<1100) setsearchBarWidth(50);
             if (width<1000) setshowWelcome(false);
               else setshowWelcome(true)
             if (width<800) {setshowName(false); setshowLeftBar(false)}
@@ -63,7 +62,7 @@ function Header() {
             if (width<550) setshowName(false)
            }}>
           <View style={styles.container}>
-            {!showLeftBar && <TouchableOpacity style={[ styles.searchButton, { backgroundColor: isDark ? '#777' : colors.lightGray }, {borderRadius: 10, margin:10}]}>
+            {!showLeftBar && <TouchableOpacity onPress={() => changeShowLeftBar()} style={[ styles.searchButton, { backgroundColor: isDark ? '#777' : colors.lightGray }, {borderRadius: 10, margin:10}]}>
                 <FontAwesome name="bars" size={18} color={isDark ? "#fff" : "black"} />
               </TouchableOpacity>}
                 <Link href={'/'} asChild>
@@ -84,7 +83,7 @@ function Header() {
             <View style={[styles.searchBar, { backgroundColor: isDark ? '#555' : colors.white }, {maxWidth : showSearchBar ? 650 : 45},{minWidth : showSearchBar ? 320 : 45},]}>
               {showSearchBar && <TextInput
                 placeholder="Search Videos"
-                style={[styles.searchInput, { color: isDark ? "#fff" : colors.darkGray },{ paddingHorizontal: paddingX }]}
+                style={[styles.searchInput, { color: isDark ? "#fff" : colors.darkGray },{ width: searchBarWidth }]}
               />}
               <TouchableOpacity style={[styles.searchButton, { backgroundColor: isDark ? '#777' : colors.lightGray }]} onPress={()=>{
                 if (!showSearchBar) setshowOtherSearchBar(!showOtherSearchBar)
@@ -159,8 +158,8 @@ function Header() {
         <View style={{ backgroundColor: isDark ? '#333' : colors.white, borderBottomWidth: 1,borderColor: colors.lightGray, padding: 2}}>
         <View style={[styles.searchBar, { backgroundColor: isDark ? '#555' : colors.white }]}>
               <TextInput
-                placeholder="Rechercher des vidéos"
-                style={[styles.searchInput, { color: isDark ? "#fff" : colors.darkGray },{ paddingHorizontal: paddingX }]}
+                placeholder="Search Videos"
+                style={[styles.searchInput, { color: isDark ? "#fff" : colors.darkGray },{ paddingHorizontal: searchBarWidth }]}
               /> 
               <TouchableOpacity style={[styles.searchButton, { backgroundColor: isDark ? '#777' : colors.lightGray }]}>
                 <FontAwesome name="search" size={18} color={isDark ? "#fff" : "black"} />
@@ -197,7 +196,7 @@ export default function RootLayout() {
             />
             <Drawer.Screen name="login" />
             <Drawer.Screen name="register" />
-            <Drawer.Screen name="dashboard" options={{ title: 'Dashboard' }} />
+            <Drawer.Screen name="dashboard" />
             <Drawer.Screen name="video/[id]" options={{ headerShown: true }} />
             <Drawer.Screen
               name="people"
@@ -250,7 +249,7 @@ export const styles = StyleSheet.create({
     borderColor: colors.lightGray,
     borderRadius: 10,
     backgroundColor: colors.white,
-    alignItems: "center",
+    alignItems: "flex-start",
     //alignSelf:"center",
     overflow: "hidden",
     height: 45,
@@ -259,11 +258,10 @@ export const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     paddingVertical: 10,
-    paddingHorizontal: screenWidth-1200,
+    paddingHorizontal: 10,
     fontSize: 15,
     color: colors.darkGray,
-    textAlign: "center",
-  
+    textAlign: "left",
     alignSelf: "stretch",
     justifyContent:"center"
    
@@ -305,12 +303,7 @@ export const styles = StyleSheet.create({
     textAlign: "center",
     textAlignVertical: "center",
   },
-  loginText:{
-    fontWeight: "700",
-    fontSize: 14,
-    textAlign: "center",
-    textAlignVertical: "center",
-  },
+
   donateButton: {
     backgroundColor: colors.donatePink,
     height: 33,

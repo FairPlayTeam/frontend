@@ -7,12 +7,15 @@ import {
   ThemeProvider,
 } from '@react-navigation/native';
 import { Drawer } from 'expo-router/drawer';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { View } from 'react-native';
 import 'react-native-reanimated';
-import { View, TouchableOpacity } from 'react-native';
-import { colors } from "@/components/ui/colors";
-import { FontAwesome } from "@expo/vector-icons";
 
+
+let __changeShowLeftBar: (value?: boolean) => void = () => {};
+export function changeShowLeftBar() {
+  __changeShowLeftBar();
+}
 
 
 export default function TabsLayout() {
@@ -20,6 +23,14 @@ export default function TabsLayout() {
   const colorScheme = useColorScheme();
   const isDark = colorScheme === "dark";
   const [showLeftBar, setshowLeftBar]= useState(false)
+
+  useEffect(() => {
+    __changeShowLeftBar = () => {
+        setshowLeftBar(s => !s)
+    }
+    return () => { __changeShowLeftBar = () => {} }
+  }, [])
+
   return (
     <>
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme} >
