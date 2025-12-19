@@ -57,12 +57,16 @@ export default function ProfileScreen() {
 
   async function onUploadAvatar() {
     const file = await pickImage();
+    console.log("fichier" ,file)
     if (!file) return;
     setUploading((s) => ({ ...s, avatar: true }));
     try {
       await uploadAvatar(file);
       const m = await getMe();
       setAvatarUrl(m.avatarUrl || '');
+    } catch (err: any) {
+      console.error('Failed to upload avatar', err);
+      Alert.alert('Error', err?.message || 'Failed to upload avatar');
     } finally {
       setUploading((s) => ({ ...s, avatar: false }));
     }
@@ -76,6 +80,9 @@ export default function ProfileScreen() {
       await uploadBanner(file);
       const m = await getMe();
       setBannerUrl(m.bannerUrl || '');
+    } catch (err: any) {
+      console.error('Failed to upload banner', err);
+      Alert.alert('Error', err?.message || 'Failed to upload banner');
     } finally {
       setUploading((s) => ({ ...s, banner: false }));
     }

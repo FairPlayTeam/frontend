@@ -1,8 +1,12 @@
 {
   "build": {
     "preview": {
+      "distribution": "internal",
       "android": {
         "buildType": "apk"
+      },
+      "env": {
+        "EXPO_BUN_INSTALL_ARGS": "--no-frozen-lockfile"
       }
     },
     "preview2": {
@@ -19,3 +23,6 @@
     "production": {}
   }
 }
+
+
+

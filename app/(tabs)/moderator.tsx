@@ -17,10 +17,10 @@ export default function ModeratorTab() {
   const [refreshing, setRefreshing] = useState(false);
   const [approving, setApproving] = useState<string | null>(null);
   const [rejecting, setRejecting] = useState<string | null>(null);
-  const { width } = useWindowDimensions();
   const text = useThemeColor({}, 'text');
   const border = useThemeColor({}, 'icon');
   const router = useRouter();
+  const [width, setwidth] = useState(0)
 
   const load = useCallback(() => {
     let active = true;
@@ -86,7 +86,10 @@ export default function ModeratorTab() {
   }
 
   return (
-    <ThemedView style={styles.container}>
+    <ThemedView style={styles.container} onLayout={(event) => {
+            setwidth(event.nativeEvent.layout.width -25)
+            console.log("width",width)
+           }}>
       <ThemedText type="title">Moderator</ThemedText>
       {loading ? (
         <ActivityIndicator />
