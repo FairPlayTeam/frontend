@@ -1,3 +1,5 @@
+# THIS IS THE FRONTEND OF lab.fairplay.video, WE DO NOT USE THIS ONE ANYMORE
+## Current frontend (https://fairplay.video/explore): https://github.com/FairPlayTeam/FairPlay-Website
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/D1D31GU3L5)
 
 # Welcome to your Expo app 👋
